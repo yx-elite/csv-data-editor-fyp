@@ -34,6 +34,12 @@ logging.info('All values are modified successfully')
 
 # Save the modified DataFrame to a new CSV file
 modified_df = pd.concat([original_df, modified_df])
-modified_df.to_csv('modified_data/Modified_L5SacrumAnteroPosteriorForce.csv', index=False, header=False)
+match L5_selection:
+    case '0':
+        modified_df.to_csv('modified_data/Modified_L5SacrumAnteroPosteriorForce.csv', index=False, header=False)
+    case '1':
+        modified_df.to_csv('modified_data/Modified_L5SacrumAnteroLateralForce.csv', index=False, header=False)
+    case '2':
+        modified_df.to_csv('modified_data/Modified_L5SacrumAnteroDistalForce.csv', index=False, header=False)
 
 logging.info('Modified dataFrame saved to CSV successfully')
