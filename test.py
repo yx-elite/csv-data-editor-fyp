@@ -41,22 +41,23 @@ def main():
     # Loop through 1st Layer subdirectory
     for subdir1 in os.listdir(base_dir):
         subdir1 = os.path.join(base_dir, subdir1)
+        print(subdir1)
         
-        # Loop through 2nd Layer subdirectory
-        for subdir2_folder_name in os.listdir(subdir1):
-            subdir2 = os.path.join(subdir1, subdir2_folder_name)
+        # # Loop through 2nd Layer subdirectory
+        # for subdir2_folder_name in os.listdir(subdir1):
+        #     subdir2 = os.path.join(subdir1, subdir2_folder_name)
             
-            # Loop through every files in the subdirectory
-            for file_path in os.listdir(subdir2):
-                # List only csv files
-                if file_path.endswith('.csv'):
+        #     # Loop through every files in the subdirectory
+        #     for file_path in os.listdir(subdir2):
+        #         # List only csv files
+        #         if file_path.endswith('.csv'):
                     
-                    # Initialise the 
-                    csv_dir = os.path.join(subdir2, file_path)
-                    save_dir = csv_dir.replace('csv','png')
-                    plot_csv_file(subdir2_folder_name, csv_dir, save_dir)
-                    iter += 1
-                    logging.info(f"Saving to '{save_dir}' ...... Completed!")
+        #             # Initialise the 
+        #             csv_dir = os.path.join(subdir2, file_path)
+        #             save_dir = csv_dir.replace('csv','png')
+        #             plot_csv_file(subdir2_folder_name, csv_dir, save_dir)
+        #             iter += 1
+        #             logging.info(f"Saving to '{save_dir}' ...... Completed!")
     
     print('\n=================================================================================================================================')
     logging.info(f'{iter} graphs generated successfully!')
