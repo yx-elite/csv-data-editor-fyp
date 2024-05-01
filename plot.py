@@ -2,8 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Read the CSV file, skipping the first 3 rows
-csv_dir = 'fig\S4\S4_CpstKneeRot\L5SacrumProximoDistalForce.csv'
-save_dir = 'fig\S4\S4_CpstKneeRot\L5SacrumProximoDistalForce.png'
+csv_dir = 'data\S6\S6_CobotDorsiPlantar\Modified_L5SacrumAnteroPosteriorForce.csv'
+save_dir = 'data\S6\S6_CobotDorsiPlantar\Modified_L5SacrumAnteroPosteriorForce.png'
 df = pd.read_csv(csv_dir, skiprows=3)
 
 x = df.iloc[:, 0]
