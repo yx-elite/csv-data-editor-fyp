@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(levelname)s:: %(asctime)s - %(message)s')
 
-base_dir = 'fig'
+base_dir = 'data'
 
 def plot_csv_file(folder_name, csv_file_path, png_file_path):
     """Plot the data from a CSV file and save the plot."""
