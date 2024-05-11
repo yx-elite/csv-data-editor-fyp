@@ -24,7 +24,7 @@ def plot_csv_file(folder_name, csv_file_path, png_file_path, mean_record):
     mean_without_outliers = np.mean(y_after_600[~is_outlier(y_after_600.values)])
 
     # Record the mean value and action
-    mean_record.append({'Action': folder_name, 'Mean after 600 frames (excluding outliers)': mean_without_outliers})
+    mean_record.append({'Action': folder_name, 'Mean': mean_without_outliers})
 
     # Plot the data
     plt.figure(figsize=(8, 6))
@@ -40,7 +40,7 @@ def plot_csv_file(folder_name, csv_file_path, png_file_path, mean_record):
         plt.title(f'{folder_name} - L5 Sacrum Proximo Distal Force')
 
     # Plot mean line
-    plt.axhline(y=mean_without_outliers, color='red', linestyle='--', label=f'Mean after 600 frames (excluding outliers): {mean_without_outliers:.2f}')
+    plt.axhline(y=mean_without_outliers, color='red', linestyle='--', label=f'Mean: {mean_without_outliers:.2f}')
     plt.legend()
 
     # plt.grid(True)
@@ -78,7 +78,6 @@ def main():
                 # List only csv files
                 if file_path.endswith('.csv'):
                     
-                    # Initialise the 
                     csv_dir = os.path.join(subdir2, file_path)
                     save_dir = csv_dir.replace('csv','png')
                     plot_csv_file(subdir2_folder_name, csv_dir, save_dir, mean_record)
@@ -88,10 +87,11 @@ def main():
     mean_df = pd.DataFrame(mean_record)
     
     # Save DataFrame to CSV
-    mean_csv_path = os.path.join(base_dir, 'mean_values_excluding_outliers.csv')
+    mean_csv_path = os.path.join(base_dir, 'mean_value.csv')
     mean_df.to_csv(mean_csv_path, index=False)
 
     print('\n=================================================================================================================================')
+    logging.info(f'{iter} graphs generated successfully!')
     logging.info(f'Mean values recorded and saved to {mean_csv_path}')
     print('=================================================================================================================================\n')
 

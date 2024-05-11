@@ -62,7 +62,6 @@ def main():
                 # List only csv files
                 if file_path.endswith('.csv'):
                     
-                    # Initialise the 
                     csv_dir = os.path.join(subdir2, file_path)
                     save_dir = csv_dir.replace('csv','png')
                     plot_csv_file(subdir2_folder_name, csv_dir, save_dir, mean_record)
