@@ -162,3 +162,4 @@ cython_debug/
 data
 modified_data
 comparison_data
+original_data
