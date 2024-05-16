@@ -14,31 +14,27 @@ def plot_csv_file(folder_name, csv_file_path, png_file_path, mean_record):
     
     # Read the CSV file, skipping the first 3 rows
     df = pd.read_csv(csv_file_path, skiprows=3)
-
+    
     x = df.iloc[:, 0]
     y = df.iloc[:, 1]
-
+    
     # Exclude outliers after frame 600
     frame_600_index = 600
     y_after_600 = y[frame_600_index:]
     mean_without_outliers = np.mean(y_after_600[~is_outlier(y_after_600.values)])
-
+    
     # Record the mean value and action
-    mean_record.append({'Action': folder_name, 'Mean': mean_without_outliers})
-
+    action = png_file_path.split(os.path.sep)[1]
+    force = png_file_path.split(os.path.sep)[-1].split('.')[0]
+    mean_record.append({'Action': f"{action}_{force}", 'Mean Value': mean_without_outliers})
+    
     # Plot the data
     plt.figure(figsize=(8, 6))
     plt.plot(x, y, linewidth=1.3)
     plt.xlabel('Time, t (s)', fontsize=12)
     plt.ylabel('Joint Reaction Force, F (N)', fontsize=12)
-
-    if 'AnteroPosterior' in csv_file_path:
-        plt.title(f'{folder_name} - L5 Sacrum Antero Posterior Force')
-    elif 'MedioLateral' in csv_file_path:
-        plt.title(f'{folder_name} - L5 Sacrum Medio Lateral Force')
-    else:
-        plt.title(f'{folder_name} - L5 Sacrum Proximo Distal Force')
-
+    plt.title(f'{action} - {force}')
+    
     # Plot mean line
     plt.axhline(y=mean_without_outliers, color='red', linestyle='--', label=f'Mean: {mean_without_outliers:.2f}')
     plt.legend()
@@ -63,6 +59,7 @@ def is_outlier(points, threshold=3.5):
 def main():
     """Main program to loop files through all subdirectories."""
     
+    iter = 0
     mean_record = []
 
     # Loop through 1st Layer subdirectory
@@ -71,23 +68,22 @@ def main():
         
         # Loop through 2nd Layer subdirectory
         for subdir2_folder_name in os.listdir(subdir1):
-            subdir2 = os.path.join(subdir1, subdir2_folder_name)
-            
-            # Loop through every files in the subdirectory
-            for file_path in os.listdir(subdir2):
-                # List only csv files
-                if file_path.endswith('.csv'):
-                    
-                    csv_dir = os.path.join(subdir2, file_path)
-                    save_dir = csv_dir.replace('csv','png')
-                    plot_csv_file(subdir2_folder_name, csv_dir, save_dir, mean_record)
-                    logging.info(f"Saving to '{save_dir}' ...... Completed!")
+            csv_dir = os.path.join(subdir1, subdir2_folder_name)
+                
+            # List only csv files
+            if csv_dir.endswith('.csv'):
+                save_dir = csv_dir.replace('csv','png')
+                plot_csv_file(subdir2_folder_name, csv_dir, save_dir, mean_record)
+                logging.info(f"Saving to '{save_dir}' ...... Completed!")
+                iter += 1
+            else:
+                pass
 
     # Convert mean_record to DataFrame
     mean_df = pd.DataFrame(mean_record)
     
     # Save DataFrame to CSV
-    mean_csv_path = os.path.join(base_dir, 'mean_value.csv')
+    mean_csv_path = 'all_forces_mean_values.csv'
     mean_df.to_csv(mean_csv_path, index=False)
 
     print('\n=================================================================================================================================')
