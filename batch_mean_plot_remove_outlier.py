@@ -31,9 +31,9 @@ def plot_csv_file(folder_name, csv_file_path, png_file_path, mean_record):
     # Plot the data
     plt.figure(figsize=(8, 6))
     plt.plot(x, y, linewidth=1.3)
-    plt.xlabel('Time, t (s)', fontsize=12)
-    plt.ylabel('Joint Reaction Force, F (N)', fontsize=12)
-    plt.title(f'{action} - {force}')
+    plt.xlabel('Time, t (s)', fontsize=14)
+    plt.ylabel('Joint Reaction Force, F (N)', fontsize=14)
+    #plt.title(f'{action} - {force}')
     
     # Plot mean line
     plt.axhline(y=mean_without_outliers, color='red', linestyle='--', label=f'Mean: {mean_without_outliers:.2f}')
